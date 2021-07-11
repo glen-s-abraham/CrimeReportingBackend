@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\District;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\ApiController;
 use App\Models\District;
 use Illuminate\Http\Request;
 
-class DistrictController extends Controller
+class DistrictController extends ApiController
 {
    /**
      * Display a listing of the resource.
@@ -15,9 +15,7 @@ class DistrictController extends Controller
      */
     public function index()
     {
-        return response()->json(
-            [District::all()]
-        );
+        return $this->showCollectionAsResponse(District::all());
     }
 
     /**
@@ -33,9 +31,7 @@ class DistrictController extends Controller
         {
             $district=District::create($request->only(['name']));
         }
-        return response()->json(
-            [$district]
-        );
+        return $this->showModelAsResponse($district);
     }
 
     /**
@@ -46,9 +42,7 @@ class DistrictController extends Controller
      */
     public function show(District $district)
     {
-        return response()->json(
-            [$district]
-        );
+        return $this->showModelAsResponse($district);
     }
 
     /**
@@ -62,9 +56,7 @@ class DistrictController extends Controller
     {
 
         $district->update($request->only(['name']));
-        return response()->json(
-            [$district]
-        );
+        return $this->showModelAsResponse($district);
     }
 
     /**
@@ -76,8 +68,6 @@ class DistrictController extends Controller
     public function destroy(District $district)
     {
         $district->delete();
-        return response()->json(
-            [$district]
-        );
+        return $this->showModelAsResponse($district);
     }
 }

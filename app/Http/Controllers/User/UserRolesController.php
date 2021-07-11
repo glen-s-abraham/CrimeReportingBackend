@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\User;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\ApiController;
 use App\Models\UserRole;
 use Illuminate\Http\Request;
 
-class UserRolesController extends Controller
+class UserRolesController extends ApiController
 {
     /**
      * Display a listing of the resource.
@@ -15,10 +15,8 @@ class UserRolesController extends Controller
      */
     public function index()
     {
-        return response()->json(
-            [UserRole::all()]
-        );
-    }
+        return $this->showCollectionAsResponse(UserRole::all());
+    }    
 
     /**
      * Store a newly created resource in storage.
@@ -33,9 +31,7 @@ class UserRolesController extends Controller
         {
             $userRole=UserRole::create($request->only(['name']));
         }
-        return response()->json(
-            [$userRole]
-        );
+        return $this->showModelAsResponse($userRole);
     }
 
     /**
@@ -46,9 +42,7 @@ class UserRolesController extends Controller
      */
     public function show(UserRole $userRole)
     {
-        return response()->json(
-            [$userRole]
-        );
+        return $this->showModelAsResponse($userRole);
     }
 
     /**
@@ -60,12 +54,9 @@ class UserRolesController extends Controller
      */
     public function update(Request $request, UserRole $userRole)
     {
-
-        
+ 
         $userRole->update($request->only(['name']));
-        return response()->json(
-            [$userRole]
-        );
+        return $this->showModelAsResponse($userRole);
     }
 
     /**
@@ -77,8 +68,6 @@ class UserRolesController extends Controller
     public function destroy(UserRole $userRole)
     {
         $userRole->delete();
-        return response()->json(
-            [$userRole]
-        );
+        return $this->showModelAsResponse($userRole);
     }
 }
