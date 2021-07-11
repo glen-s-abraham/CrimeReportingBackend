@@ -17,9 +17,15 @@ class CreateUsersTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
+            $table->string('mobile')->unique()->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->rememberToken();
+            $table->unsignedBigInteger('role_id');
+            $table->foreign('role_id')->references('id')->on('user_roles')
+            ->onDelete('cascade');
+            $table->unsignedBigInteger('station_id')->nullable();
+            $table->foreign('station_id')->references('id')->on('stations')
+            ->onDelete('cascade');
             $table->timestamps();
         });
     }
