@@ -17,7 +17,7 @@ class CreateStationsTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('place');
-            $table->unsignedBigInteger('district_id');
+            $table->unsignedBigInteger('district_id')->nullable();
             $table->foreign('district_id')->references('id')->on('districts')
             ->onDelete('cascade');
             $table->timestamps();
