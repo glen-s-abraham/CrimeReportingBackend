@@ -18,3 +18,4 @@ Route::resource('userRoles','User\UserRolesController');
 Route::resource('districts','District\DistrictController');
 Route::resource('stations','Station\StationController');
 Route::resource('users','User\UserController');
+Route::resource('complaints','Complaint\ComplaintController');

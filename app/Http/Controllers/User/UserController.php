@@ -6,7 +6,7 @@ use App\Http\Controllers\ApiController;
 use App\Models\User;
 use App\Http\Requests\UserStoreRequest;
 use App\Http\Requests\UserUpdateRequest;
-
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends ApiController
 {
@@ -30,6 +30,7 @@ class UserController extends ApiController
     {
         $data=$request->only(['name','email','password','mobile']);
         $data['role_id']=3;
+        $data['password']=Hash::make($request->password);
         $user=User::create($data);
         return $this->showModelAsResponse($user);
 
