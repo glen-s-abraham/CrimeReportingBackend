@@ -22,3 +22,5 @@ Route::resource('policeUsers','User\PoliceUserController');
 Route::resource('complaints','Complaint\ComplaintController');
 Route::resource('feedbacks','Feedback\FeedbackController');
 Route::resource('queries','Query\QueryController');
+Route::post('login', 'Auth\AuthController@login');
+Route::post('logout', 'Auth\AuthController@logout');
