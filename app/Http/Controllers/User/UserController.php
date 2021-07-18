@@ -10,6 +10,12 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends ApiController
 {
+    public function __construct()
+    {
+        $this->middleware('auth:sanctum')->only([
+            'index','store','update','show','destroy'
+        ]);
+    }
     /**
      * Display a listing of the resource.
      *

@@ -9,6 +9,12 @@ use App\Http\Requests\ComplaintUpdateRequest;
 use Illuminate\Support\Facades\Storage;
 class ComplaintController extends ApiController
 {
+    public function __construct()
+    {
+        $this->middleware('auth:sanctum')->only([
+            'store','update','destroy'
+        ]);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -28,7 +34,7 @@ class ComplaintController extends ApiController
     public function store(ComplaintStoreRequest $request)
     {
         $data=$request->only(['subject','body','place','district_id','priority']);
-        $data['user_id']=2;//change to auth()->user()-id after auth middleware
+        $data['user_id']=auth()->user()->id;
         $data['status']='submitted';
         if($request->hasFile('file'))
         {

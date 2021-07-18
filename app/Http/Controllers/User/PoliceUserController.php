@@ -10,6 +10,12 @@ use Illuminate\Support\Facades\Hash;
 
 class PoliceUserController extends ApiController
 {
+    public function __construct()
+    {
+        $this->middleware('auth:sanctum')->only([
+            'store','update'
+        ]);
+    }
     
     /**
      * Store a newly created resource in storage.
