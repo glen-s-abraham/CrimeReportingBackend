@@ -19,3 +19,5 @@ Route::resource('districts','District\DistrictController');
 Route::resource('stations','Station\StationController');
 Route::resource('users','User\UserController');
 Route::resource('complaints','Complaint\ComplaintController');
+Route::resource('feedbacks','Feedback\FeedbackController');
+Route::resource('queries','Query\QueryController');

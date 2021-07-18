@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Models\Complaint;
+use App\Models\FeedBack;
+use App\Models\Query;
 
 class User extends Authenticatable
 {
@@ -40,5 +42,11 @@ class User extends Authenticatable
 
     public function complaints(){
         return $this->hasMany(Complaint::class);
+    }
+    public function feedbacks(){
+        return $this->hasMany(FeedBack::class);
+    }
+    public function queries(){
+        return $this->hasMany(Query::class);
     }
 }
