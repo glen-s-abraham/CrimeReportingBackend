@@ -10,6 +10,7 @@ use App\Models\Complaint;
 use App\Models\FeedBack;
 use App\Models\Query;
 
+
 class User extends Authenticatable
 {
     use HasFactory, Notifiable;
