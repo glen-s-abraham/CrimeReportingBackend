@@ -1,0 +1,38 @@
+version: '3.7'
+
+services: 
+    api:
+        container_name: crime_reporting_api
+        build:
+            context: .
+            dockerfile: Dockerfile
+        environment:
+            DB_HOST: mysqldb
+            DB_DATABSASE: crimereporting 
+            DB_USERNAME: root
+            DB_PASSWORD: root
+        ports: 
+            - 8000:8000
+        depends_on: 
+            - mysqldb    
+        volumes: 
+            - .:/app
+        networks: 
+            - crime_reporting_network  
+    mysqldb:
+        container_name: crime_reporting_database
+        image: mysql:5.7.22
+        restart: always
+        environment:
+            MYSQL_DATABASE: crimereporting
+            MYSQL_USER: root
+            MYSQL_PASSWORD: root
+            MYSQL_ROOT_PASSWORD: root
+        ports:
+            - 33066:3306
+        volumes:
+            - ./db:/var/lib/mysql    
+        networks:
+            - crime_reporting_network
+networks: 
+    crime_reporting_network:                           
