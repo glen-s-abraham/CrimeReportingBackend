@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Feedback;
 
 use App\Http\Controllers\ApiController;
 use App\Models\FeedBack;
+use App\Policies\FeedBackPolicy;
 use Illuminate\Http\Request;
 
 class FeedbackController extends ApiController
@@ -11,7 +12,7 @@ class FeedbackController extends ApiController
     public function __construct()
     {
         $this->middleware('auth:sanctum')->only([
-            'store','update','destroy'
+            'index','store','show','update','destroy'
         ]);
     }
     /**
@@ -21,6 +22,7 @@ class FeedbackController extends ApiController
      */
     public function index()
     {
+        $this->authorize('viewAny',FeedBack::class);
         return $this->showCollectionAsResponse(FeedBack::all());
     }
 
@@ -32,6 +34,7 @@ class FeedbackController extends ApiController
      */
     public function store(Request $request)
     {
+        
         $feedback=null;
         if($request->has('feedback'))
         {
@@ -50,6 +53,7 @@ class FeedbackController extends ApiController
      */
     public function show(FeedBack $feedback)
     {
+        $this->authorize('view',$feedback);
         error_log($feedback);
        return $this->showModelAsResponse($feedback); 
     }
@@ -64,6 +68,7 @@ class FeedbackController extends ApiController
      */
     public function update(Request $request, FeedBack $feedback)
     {
+        $this->authorize('update',$feedback);
         $feedback->update($request->only(['feedback']));
         return $this->showModelAsResponse($feedback);
     }
@@ -76,6 +81,7 @@ class FeedbackController extends ApiController
      */
     public function destroy(FeedBack $feedback)
     {
+        $this->authorize('delete',$feedback);
         $feedback->delete();
         return $this->showModelAsResponse($feedback);
     }

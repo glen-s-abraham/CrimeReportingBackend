@@ -11,7 +11,7 @@ class QueryController extends ApiController
     public function __construct()
     {
         $this->middleware('auth:sanctum')->only([
-            'store','update','destroy'
+            'index','store','show','update','destroy'
         ]);
     }
     /**
@@ -21,6 +21,7 @@ class QueryController extends ApiController
      */
     public function index()
     {
+        $this->authorize('viewAny',Query::class);
         return $this->showCollectionAsResponse(Query::all());
     }
 
@@ -50,6 +51,7 @@ class QueryController extends ApiController
      */
     public function show(Query $query)
     {
+        $this->authorize('view',$query);
         return $this->showModelAsResponse($query);
     }
 
@@ -62,6 +64,7 @@ class QueryController extends ApiController
      */
     public function update(Request $request, Query $query)
     {
+        $this->authorize('update',$query);
         $query->update($request->only(['query']));
         return $this->showModelAsResponse($query);
     }
@@ -74,6 +77,7 @@ class QueryController extends ApiController
      */
     public function destroy(Query $query)
     {
+        $this->authorize('delete',$query);
         $query->delete();
         return $this->showModelAsResponse($query);
     }
