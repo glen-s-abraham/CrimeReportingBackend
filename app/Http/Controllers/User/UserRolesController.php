@@ -11,8 +11,10 @@ class UserRolesController extends ApiController
     public function __construct()
     {
         $this->middleware('auth:sanctum')->only([
-            'store','update','destroy'
+            'index','show','store','update','destroy'
         ]);
+
+        
     }
     /**
      * Display a listing of the resource.
@@ -21,6 +23,7 @@ class UserRolesController extends ApiController
      */
     public function index()
     {
+        $this->authorize('viewAny',UserRole::class);
         return $this->showCollectionAsResponse(UserRole::all());
     }    
 
@@ -32,6 +35,7 @@ class UserRolesController extends ApiController
      */
     public function store(Request $request)
     {
+        $this->authorize('create',UserRole::class);
         $userRole=null;
         if($request->has('name'))
         {
@@ -48,6 +52,7 @@ class UserRolesController extends ApiController
      */
     public function show(UserRole $userRole)
     {
+        $this->authorize('view',UserRole::class);
         return $this->showModelAsResponse($userRole);
     }
 
@@ -60,7 +65,7 @@ class UserRolesController extends ApiController
      */
     public function update(Request $request, UserRole $userRole)
     {
- 
+        $this->authorize('update',UserRole::class);
         $userRole->update($request->only(['name']));
         return $this->showModelAsResponse($userRole);
     }
@@ -73,6 +78,7 @@ class UserRolesController extends ApiController
      */
     public function destroy(UserRole $userRole)
     {
+        $this->authorize('delete',UserRole::class);
         $userRole->delete();
         return $this->showModelAsResponse($userRole);
     }
