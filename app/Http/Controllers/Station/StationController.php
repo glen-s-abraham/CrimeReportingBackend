@@ -34,6 +34,7 @@ class StationController extends ApiController
      */
     public function store(StationStoreRequest $request)
     {
+        $this->authorize('create',Station::class);
         $station=Station::create($request->only(['name','place','district_id']));
         return $this->showModelAsResponse($station);
     }
@@ -58,6 +59,7 @@ class StationController extends ApiController
      */
     public function update(StationUpdateRequest $request, Station $station)
     {
+        $this->authorize('update',Station::class);
         $station->update($request->only(['name','place','district_id']));
         return $this->showModelAsResponse($station);
     }
@@ -70,6 +72,7 @@ class StationController extends ApiController
      */
     public function destroy(Station $station)
     {
+        $this->authorize('delete',Station::class);
         $station->delete();
         return $this->showModelAsResponse($station);
 
