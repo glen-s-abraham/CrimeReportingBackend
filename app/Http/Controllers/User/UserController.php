@@ -13,7 +13,7 @@ class UserController extends ApiController
     public function __construct()
     {
         $this->middleware('auth:sanctum')->only([
-            'index','store','update','show','destroy'
+            'update','destroy'
         ]);
     }
     /**
@@ -34,6 +34,7 @@ class UserController extends ApiController
      */
     public function store(UserStoreRequest $request)
     {
+
         $data=$request->only(['name','email','password','mobile']);
         $data['role_id']=3;
         $data['password']=Hash::make($request->password);
@@ -57,6 +58,7 @@ class UserController extends ApiController
      */
     public function update(UserUpdateRequest $request, User $user)
     {
+        $this->authorize('update',$user);
         $user->update($request->only(['name','email','mobile']));
         return $this->showModelAsResponse($user);
     }
@@ -69,6 +71,7 @@ class UserController extends ApiController
      */
     public function destroy(User $user)
     {
+        $this->authorize('delete',$user);
         $user->delete();
         return $this->showModelAsResponse($user);
     }
