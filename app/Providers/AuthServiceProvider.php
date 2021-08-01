@@ -2,10 +2,12 @@
 
 namespace App\Providers;
 
+use App\Models\Complaint;
 use App\Models\District;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 use App\Models\UserRole;
+use App\Policies\ComplaintPolicy;
 use App\Policies\DistrictPolicy;
 use App\Policies\UserPolicy;
 use App\Policies\UserRolePolicy;
@@ -21,6 +23,7 @@ class AuthServiceProvider extends ServiceProvider
         UserRole::class=>UserRolePolicy::class,
         District::class=>DistrictPolicy::class,
         User::class=>UserPolicy::class,
+        Complaint::class=>ComplaintPolicy::class,
     ];
 
     /**

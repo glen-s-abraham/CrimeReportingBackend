@@ -25,6 +25,7 @@ class PoliceUserController extends ApiController
      */
     public function store(PoliceUserStoreRequest $request)
     {
+        $this->authorize('create',User::class);
         $data=$request->only(['name','email','password','mobile','station_id']);
         $data['role_id']=2;
         $data['password']=Hash::make($request->password);
@@ -41,6 +42,7 @@ class PoliceUserController extends ApiController
      */
     public function update(PoliceUserUpdateRequest $request, User $policeUser)
     {
+        $this->authorize('update',$policeUser);
         $policeUser->update($request->only(['name','email','mobile','station_id']));
         return $this->showModelAsResponse($policeUser);
     }

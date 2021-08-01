@@ -7,19 +7,19 @@ services:
             context: .
             dockerfile: Dockerfile
         environment:
-            DB_HOST: mysqldb
+            DB_HOST: db
             DB_DATABSASE: crimereporting 
             DB_USERNAME: root
             DB_PASSWORD: root
         ports: 
             - 8000:8000
         depends_on: 
-            - mysqldb    
+            - db    
         volumes: 
             - .:/app
         networks: 
-            - crime_reporting_network  
-    mysqldb:
+            - crime_reporting  
+    db:
         container_name: crime_reporting_database
         image: mysql:5.7.22
         restart: always
@@ -30,9 +30,8 @@ services:
             MYSQL_ROOT_PASSWORD: root
         ports:
             - 33066:3306
-        volumes:
-            - ./db:/var/lib/mysql    
+            
         networks:
-            - crime_reporting_network
+            - crime_reporting
 networks: 
-    crime_reporting_network:                           
+    crime_reporting:                           
