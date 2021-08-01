@@ -4,6 +4,7 @@ namespace App\Http\Controllers\District;
 
 use App\Http\Controllers\ApiController;
 use App\Models\District;
+use App\Policies\DistrictPolicy;
 use Illuminate\Http\Request;
 
 class DistrictController extends ApiController
@@ -21,6 +22,7 @@ class DistrictController extends ApiController
      */
     public function index()
     {
+        
         return $this->showCollectionAsResponse(District::all());
     }
 
@@ -32,6 +34,7 @@ class DistrictController extends ApiController
      */
     public function store(Request $request)
     {
+        $this->authorize('create',District::class);
         $district=null;
         if($request->has('name'))
         {
@@ -60,7 +63,7 @@ class DistrictController extends ApiController
      */
     public function update(Request $request, District $district)
     {
-
+        $this->authorize('update',District::class);
         $district->update($request->only(['name']));
         return $this->showModelAsResponse($district);
     }
@@ -73,6 +76,7 @@ class DistrictController extends ApiController
      */
     public function destroy(District $district)
     {
+        $this->authorize('delete',District::class);
         $district->delete();
         return $this->showModelAsResponse($district);
     }

@@ -2,9 +2,11 @@
 
 namespace App\Providers;
 
+use App\Models\District;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 use App\Models\UserRole;
+use App\Policies\DistrictPolicy;
 use App\Policies\UserRolePolicy;
 
 class AuthServiceProvider extends ServiceProvider
@@ -16,6 +18,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         UserRole::class=>UserRolePolicy::class,
+        District::class=>DistrictPolicy::class,
     ];
 
     /**
