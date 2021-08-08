@@ -7,6 +7,7 @@ use App\Models\Complaint;
 use App\Models\User;
 use App\Http\Requests\ComplaintStoreRequest;
 use App\Http\Requests\ComplaintUpdateRequest;
+use App\Jobs\ComplaintSubmitted;
 use Illuminate\Support\Facades\Storage;
 class ComplaintController extends ApiController
 {
@@ -43,6 +44,8 @@ class ComplaintController extends ApiController
             $data['file']=$request->file('file')->store('files');
         }
         $complaint=Complaint::create($data);
+        ComplaintSubmitted::dispatch(auth()->user()->email,$complaint)
+                          ->delay(now()->addSeconds(2));
         return $this->showModelAsResponse($complaint);
     }
 
